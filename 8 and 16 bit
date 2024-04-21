@@ -1,0 +1,27 @@
+import random
+
+def generate_prime(bit_length):
+    # Generate a random prime number with the given bit length
+    if bit_length == 8:
+        primes = [3, 5, 7, 11]
+    elif bit_length == 16:
+        primes = [101, 103, 107, 109]
+    else:
+        raise ValueError("Unsupported bit length for test case generation.")
+    
+    return random.choice(primes)
+
+def generate_test_case(bit_length):
+    p = generate_prime(bit_length)
+    q = generate_prime(bit_length)
+    while p == q:
+        q = generate_prime(bit_length)
+    return p, q
+
+# Generate an 8-bit test case
+p_8bit, q_8bit = generate_test_case(8)
+print(f"8-bit test case: p={p_8bit}, q={q_8bit}")
+
+# Generate a 16-bit test case
+p_16bit, q_16bit = generate_test_case(16)
+print(f"16-bit test case: p={p_16bit}, q={q_16bit}")
