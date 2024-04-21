@@ -1,0 +1,40 @@
+import time
+import math
+
+# Given values
+p = int(input("Enter a prime number: "))
+q = int(input("Enter another prime number: "))
+n = p * q
+eulr = (p - 1) * (q - 1)
+
+# Find an 'e' that is co-prime with 'eulr'
+e = 13
+while math.gcd(e, eulr) != 1:
+    e += 1
+
+print(f"{e} and {eulr} are co-prime.")
+
+def extended_gcd(a, b):
+    x0, x1, y0, y1 = 1, 0, 0, 1
+    while b:
+        q, a, b = a // b, b, a % b
+        x0, x1 = x1, x0 - q * x1
+        y0, y1 = y1, y0 - q * y1
+    return a, x0, y0
+
+# Calculate private key (d) using the extended Euclidean algorithm
+start_time = time.time()
+gcd, x, y = extended_gcd(e, eulr)
+if gcd == 1:
+    d = x % eulr
+    if d < 0:
+        d += eulr
+else:
+    raise ValueError("No modular inverse exists for the given e and eulr.")
+end_time = time.time()
+
+# Output results
+print(f"Modulus (N): {n}")
+print(f"Public key: (n={n}, e={e})")
+print(f"Private key: (n={n}, d={d})")
+print(f"Runtime: {(end_time - start_time) * 1000} milliseconds")
